@@ -2,4 +2,5 @@
 use strict;
 use warnings;
 
-print "Hello world"; #prints the text "Hello world" when the script is run
+print "Hello world\n"; #prints the text "Hello world" when the script is run
+
