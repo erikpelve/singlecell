@@ -25,7 +25,7 @@ open my $inhandle2, '<', $infile2 or die "Couldn't read the file $infile\n";
 
 
 #Thropic markers from Lauro_etal_2009
-%oligotroph_markers = ("COG0183", 1,
+my %oligotroph_markers = ("COG0183", 1,
 "COG0318", 1,
 "COG1024", 1,
 "COG1804", 1,
@@ -38,7 +38,7 @@ open my $inhandle2, '<', $infile2 or die "Couldn't read the file $infile\n";
 "COG1680", 1,
 "COG3485", 1,
 "COG2124", 1);
-%copiotroph_markers = ("COG1263", 1,
+my %copiotroph_markers = ("COG1263", 1,
 "COG1299", 1,
 "COG0733", 1,
 "COG0697", 1,
@@ -68,7 +68,7 @@ open my $inhandle2, '<', $infile2 or die "Couldn't read the file $infile\n";
 "COG3437", 1,
 "COG0110", 1);
 
-my %organism_oligootroph_number;
+my %organism_oligotroph_number;
 my %organism_copiotroph_number;
 my %organism_gene_number;
 
@@ -80,25 +80,25 @@ my %organism_list; ##key = organism name, name = 1
 
 while (my $line = <$inhandle>){
 	chomp $line;
-	
+
 	if (substr($line, 0,1) eq '>' ){  #only work with names from the fasta file
-	
+
 
 
 
 		#finding the organism name
-		my @list = split(/[/, $line);   #The name is last in the string, between []
-		my @list2 = split(/]/, $list[-1]);
+		my @list = split(/\[/, $line);   #The name is last in the string, between []
+		my @list2 = split(/\]/, $list[-1]);
 
 		#finding the protein number
 		my @list3 = split(/|/, $line);
-		
 
-		$orgname{$list3[3]} = $list2[0];
-	
 
-		$organism_list{$orgname} = 1;
-	
+		$org_name{$list3[3]} = $list2[0];
+
+
+		$organism_list{$org_name{$list3[3]}} = 1;
+
 	}
 
 	}
@@ -111,18 +111,18 @@ while (my $line = <$inhandle>){
 	my @list = split(/\t/, $line);
 	my $organism_name;
 
-	my @list2 = split(/|/, $list[0];
+	my @list2 = split(/\|/, $list[0]);
 	my $protein_id = $list2[3];
-	
+
 	my $cog = $list[1];
-	
-	
-	if (exists $orgname{$protein_id}){
-		$organism_name = $orgname{$protein_id};
+
+
+	if (exists $org_name{$protein_id}){
+		$organism_name = $org_name{$protein_id};
 	}else{
 		print "Warning - unidentified $protein_id: $protein_id\n";
 		}
-		
+
 
 
 	if (exists $organism_gene_number{$organism_name}){
@@ -130,10 +130,10 @@ while (my $line = <$inhandle>){
 		}else{
 			$organism_gene_number{$organism_name} = 0;
 		}
-			
-	
 
-	
+
+
+
 	if (exists $oligotroph_markers{$cog}){
 		if (exists $organism_oligotroph_number{$organism_name}){
 			$organism_oligotroph_number{$organism_name}++;
@@ -141,7 +141,7 @@ while (my $line = <$inhandle>){
 			$organism_oligotroph_number{$organism_name} = 0;
 		}
 	}
-	
+
 	if (exists $copiotroph_markers{$cog}){
 		if (exists $organism_copiotroph_number{$organism_name}){
 			$organism_copiotroph_number{$organism_name}++;
@@ -150,12 +150,12 @@ while (my $line = <$inhandle>){
 		}
 	}
 
-	
+
 }
 
 
 print $outhandle "Organism\tGene_no\tOligotrophic_markers_no\tCopiotrophic_markers_no\tOligotrophic_markers_%\tCopiotrophic_markers_%\n";
-	
+
 foreach my $organism_name (sort keys %organism_list){
 	my $gene_no = $organism_gene_number{$organism_name};
 	my $oligotroph_markers = $organism_oligotroph_number{$organism_name};
@@ -170,5 +170,5 @@ foreach my $organism_name (sort keys %organism_list){
 	print $outhandle "$oligotroph_freq\t";
 	print $outhandle "$copiotroph_freq\n";
 	}
-	
+
 print "Done! Output in the file $outfile";
