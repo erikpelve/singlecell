@@ -9,7 +9,7 @@ use warnings;
 ##List of markers from: Lauro, F.M. et al., 2009. The genomic basis of trophic strategy in marine bacteria. Proceedings of the National Academy of Sciences of the United States of America, 106(37), pp.15527–33. Available at: http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2739866&tool=pmcentrez&rendertype=abstract.
 ##WebMGA: http://weizhong-lab.ucsd.edu/metagenomic-analysis/server/cog/
 
-##Input webMGA data as ARGV[0]
+##Input webMGA output.2 as ARGV[0]
 ##Input faa file as ARGV[1]
 
 my $infile = $ARGV[0];
@@ -40,14 +40,27 @@ my %organism_list; ##key = organism name, name = 1
 
 while (my $line = <$inhandle>){
 	chomp $line;
-	my @list = split(/\t/, $line);
 	
-	(...)
+	if (substr($line, 0,1) eq '>' ){  #only work with names from the fasta file
 	
-	$orgname{} = ;
+
+
+
+		#finding the organism name
+		my @list = split(/[/, $line);   #The name is last in the string, between []
+		my @list2 = split(/]/, $list[-1]);
+
+		#finding the protein number
+		my @list3 = split(/|/, $line);
+		
+
+		$orgname{$list3[3]} = $list2[0];
 	
-	$organism_list{$orgname} = 1;
+
+		$organism_list{$orgname} = 1;
 	
+	}
+
 	}
 
 
@@ -57,7 +70,13 @@ while (my $line = <$inhandle>){
 	chomp $line;
 	my @list = split(/\t/, $line);
 	my $organism_name;
-	my $protein_id;
+
+	my @list2 = split(/|/, $list[0];
+	my $protein_id = $list2[3];
+	
+	my $cog = $list[1];
+	
+	
 	if (exists $orgname{$protein_id}){
 		$organism_name = $orgname{$protein_id};
 	}else{
@@ -73,7 +92,8 @@ while (my $line = <$inhandle>){
 		}
 			
 	
-	my $cog = ;
+
+	
 	if (exists $oligotroph_markers{$cog}){
 		if (exists $organism_oligotroph_number{$organism_name}){
 			$organism_oligotroph_number{$organism_name}++;
