@@ -10,25 +10,105 @@ use warnings;
 ##WebMGA: http://weizhong-lab.ucsd.edu/metagenomic-analysis/server/cog/
 
 ##Input webMGA data as ARGV[0]
+##Input faa file as ARGV[1]
 
 my $infile = $ARGV[0];
+my $infile2 = $ARGV[1];
 my @name_list = split(/\//, $infile);
 my $inname = $name_list[-1];
 my $outfile = "trophic_marker_frequency_".$inname.".txt";
 
 open my $inhandle, '<', $infile or die "Couldn't read the file $infile\n";
 open my $outhandle, '>', $outfile or die "Couldn't write to the file $outfile\n";
+open my $inhandle2, '<', $infile2 or die "Couldn't read the file $infile\n";
+
 
 
 #Thropic markers from Lauro_etal_2009
-@oligotroph_markers = ();
-@copiotroph_markers = ();
+%oligotroph_markers = ();
+%copiotroph_markers = ();
+
+my %organism_oligootroph_number;
+my %organism_copiotroph_number;
+my %organism_gene_number;
+
+# read file 2 - get organism name
 
 
-#Read file
+my %org_name; ## key = protein id, name = organism name
+my %organism_list; ##key = organism name, name = 1
+
 while (my $line = <$inhandle>){
 	chomp $line;
-    my @list = split(/\t/, $line);
+	my @list = split(/\t/, $line);
+	
+	(...)
+	
+	$orgname{} = ;
+	
+	$organism_list{$orgname} = 1;
+	
+	}
 
 
+
+#Read file 1
+while (my $line = <$inhandle>){
+	chomp $line;
+	my @list = split(/\t/, $line);
+	my $organism_name;
+	my $protein_id;
+	if (exists $orgname{$protein_id}){
+		$organism_name = $orgname{$protein_id};
+	}else{
+		print "Warning - unidentified $protein_id: $protein_id\n";
+		}
+		
+
+
+	if (exists $organism_gene_number{$organism_name}){
+		$organism_gene_number{$organism_name}++;
+		}else{
+			$organism_gene_number{$organism_name} = 0;
+		}
+			
+	
+	my $cog = ;
+	if (exists $oligotroph_markers{$cog}){
+		if (exists $organism_oligotroph_number{$organism_name}){
+			$organism_oligotroph_number{$organism_name}++;
+		}else{
+			$organism_oligotroph_number{$organism_name} = 0;
+		}
+	}
+	
+	if (exists $copiotroph_markers{$cog}){
+		if (exists $organism_copiotroph_number{$organism_name}){
+			$organism_copiotroph_number{$organism_name}++;
+		}else{
+			$organism_copiotroph_number{$organism_name} = 0;
+		}
+	}
+
+	
 }
+
+
+print $outhandle "Organism\tGene_no\tOligotrophic_markers_no\tCopiotrophic_markers_no\tOligotrophic_markers_%\tCopiotrophic_markers_%\n";
+	
+foreach my $organism_name (sort keys %organism_list){
+	my $gene_no = $organism_gene_number{$organism_name};
+	my $oligotroph_markers = $organism_oligotroph_number{$organism_name};
+	my $copiotroph_markers = $organism_copiotroph_number{$organism_name};
+	my $oligotroph_freq = $oligotroph_markers / $gene_no;
+	my $copiotroph_freq = $copiotroph_markers / $gene_no;
+
+	print $outhandle "$organism_name\t";
+	print $outhandle "$gene_no\t";
+	print $outhandle "$oligotroph_markers\t";
+	print $outhandle "$copiotroph_markers\t";
+	print $outhandle "$oligotroph_freq\t";
+	print $outhandle "$copiotroph_freq\n";
+	}
+	
+print "Done! Output in the file $outfile";
