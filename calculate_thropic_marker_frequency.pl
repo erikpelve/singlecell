@@ -25,8 +25,48 @@ open my $inhandle2, '<', $infile2 or die "Couldn't read the file $infile\n";
 
 
 #Thropic markers from Lauro_etal_2009
-%oligotroph_markers = ();
-%copiotroph_markers = ();
+%oligotroph_markers = ("COG0183", 1,
+"COG0318", 1,
+"COG1024", 1,
+"COG1804", 1,
+"COG1960", 1,
+"COG1028", 1,
+"COG0412", 1,
+"COG1228", 1,
+"COG0625", 1,
+"COG0179", 1,
+"COG1680", 1,
+"COG3485", 1,
+"COG2124", 1);
+%copiotroph_markers = ("COG1263", 1,
+"COG1299", 1,
+"COG0733", 1,
+"COG0697", 1,
+"COG1292", 1,
+"COG2116", 1,
+"COG2704", 1,
+"COG0697", 1,
+"COG0814", 1,
+"COG1114", 1,
+"COG1275", 1,
+"COG1972", 1,
+"COG2271", 1,
+"COG3104", 1,
+"COG3325", 1,
+"COG0826", 1,
+"COG0243", 1,
+"COG0716", 1,
+"COG2863", 1,
+"COG3005", 1,
+"COG0243", 1,
+"COG0716", 1,
+"COG3005", 1,
+"COG0835", 1,
+"COG0840", 1,
+"COG0745", 1,
+"COG2197", 1,
+"COG3437", 1,
+"COG0110", 1);
 
 my %organism_oligootroph_number;
 my %organism_copiotroph_number;
