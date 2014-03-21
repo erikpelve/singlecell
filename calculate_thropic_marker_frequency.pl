@@ -78,7 +78,7 @@ my %organism_gene_number;
 my %org_name; ## key = protein id, name = organism name
 my %organism_list; ##key = organism name, name = 1
 
-while (my $line = <$inhandle>){
+while (my $line = <$inhandle2>){
 	chomp $line;
 
 	if (substr($line, 0,1) eq '>' ){  #only work with names from the fasta file
@@ -91,8 +91,7 @@ while (my $line = <$inhandle>){
 		my @list2 = split(/\]/, $list[-1]);
 
 		#finding the protein number
-		my @list3 = split(/|/, $line);
-
+		my @list3 = split(/\|/, $line);
 
 		$org_name{$list3[3]} = $list2[0];
 
@@ -160,8 +159,8 @@ foreach my $organism_name (sort keys %organism_list){
 	my $gene_no = $organism_gene_number{$organism_name};
 	my $oligotroph_markers = $organism_oligotroph_number{$organism_name};
 	my $copiotroph_markers = $organism_copiotroph_number{$organism_name};
-	my $oligotroph_freq = $oligotroph_markers / $gene_no;
-	my $copiotroph_freq = $copiotroph_markers / $gene_no;
+	my $oligotroph_freq = 100 *($oligotroph_markers / $gene_no);
+	my $copiotroph_freq = 100 * ($copiotroph_markers / $gene_no);
 
 	print $outhandle "$organism_name\t";
 	print $outhandle "$gene_no\t";
