@@ -12,6 +12,7 @@ open my $inhandle1, '<', $infile1 or die ("couldn't open the file $infile1");
 
 my $s = 1; 
 my $n = 0;
+
 my %characters;
 my $name;
 while (my $line = <$inhandle1>){ #Loop through fasta file
@@ -25,6 +26,7 @@ while (my $line = <$inhandle1>){ #Loop through fasta file
 				print $_, ": $characters{$name}{$_}\t"
 				}
 			$n =0;
+			
 			print "\n";
 			
 		}
@@ -37,10 +39,13 @@ while (my $line = <$inhandle1>){ #Loop through fasta file
 			$n++;
 			if (exists $characters{$name}{$_}){
 				$characters{$name}{$_} = $characters{$name}{$_} +1;
+			
 				}else{
-					$characters{$name}{$_}= 0;}
+					$characters{$name}{$_}= 1;
+			
+					}
 				
 			}
 	
-			$n++;}
+			}
 }
