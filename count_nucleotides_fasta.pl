@@ -21,7 +21,7 @@ while (my $line = <$inhandle1>){ #Loop through fasta file
 	if (substr($line, 0,1) eq '>' ){
 		if ($s==0){
 			print $n, "\t";
-			foreach (sort keys %($characters{$name})){
+			foreach (sort keys %{$characters{$name}}){
 				print $_, ": $characters{$name}{$_}\t"
 				}
 			$n =0;
