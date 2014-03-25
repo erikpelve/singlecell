@@ -13,7 +13,7 @@ die ("No key in ARGV[0]") if ($ARGV[0] eq "");
 my $infile_tree = $ARGV[1];
 die ("No tree in ARGV[1]") if ($ARGV[1] eq "");
 my $level = -1;
-$level = ARGV[2] if exists (ARGV[2]);
+$level = $ARGV[2] if exists ($ARGV[2]);
 
 
 
@@ -40,7 +40,7 @@ while (my $line = <$inhandle_key>){
 	my @key_id = split(/>/, $list[0]);	
 	$key_name{$key_id[1]} = $newname;
 	}
-	
+
 my $outfile_tree = $infile_tree.".changed_names.txt";
 open my $outhandle_tree, '>', $outfile_tree or die ("Couldn't write to the file $outfile_tree");
 
