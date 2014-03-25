@@ -17,11 +17,29 @@ open my $outhandle1, '>', $outfile1 or die "Couldn't write to the file $outfile1
 my %fasta_id;
 
 #Read file of fasta names to exclude
+while (my $line = <$inhandle2>){
+	$line =~ s/\r|\n//g; #Remove newlines, regardless of format
+	chomp $line;
+	$fasta_id{$line} = 1;
+}
+	
 
-
-
-
+#Read fasta file, remove indicated fasta.	
+my $flag = 0;	#flag = 1 means remove
 while (my $line = <$inhandle>){
 	$line =~ s/\r|\n//g; #Remove newlines, regardless of format
 	chomp $line;
-	if (substr($line, 0,1) eq '>' ){
+	if (substr($line, 0,1) eq '>' ){  #header
+			$flag = 0;
+			if(exists $fasta_id{$line)){
+			$flag = 1;
+			}
+	if($flag == 0){
+			print $line, "\n"
+		}
+	}else{
+		if($flag == 0){
+			print $line, "\n"
+		}
+	}
+		
