@@ -45,3 +45,6 @@ print(Group3)
 
 ##Make plots
 
+barplot(Group1)
+barplot(Group2)
+barplot(Group3)
