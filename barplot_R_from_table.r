@@ -38,9 +38,9 @@ x <-0
 for (r in 1:9) {if (variable[r,1] != c("Group3")){a <- r - x; x <- x+1; Group3 <- Group3[-a,];}}
 
 ##test
-Group1
-Group2
-Group3
+print(Group1)
+print(Group2)
+print(Group3)
 
 
 ##Make plots
