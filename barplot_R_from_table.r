@@ -45,6 +45,11 @@ print(Group3)
 
 ##Make plots
 
+Group1$Row_ID <- NULL
+Group2$Row_ID <- NULL
+Group3$Row_ID <- NULL
+
+
 barplot(Group1)
 barplot(Group2)
 barplot(Group3)
