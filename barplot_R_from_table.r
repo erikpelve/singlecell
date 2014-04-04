@@ -38,18 +38,23 @@ x <-0
 for (r in 1:9) {if (variable[r,1] != c("Group3")){a <- r - x; x <- x+1; Group3 <- Group3[-a,];}}
 
 ##test
-print(Group1)
-print(Group2)
-print(Group3)
+#transformed into rows. Stupid R. Why does it need rows anyway?
+print(t(Group1))
+print(t(Group2))
+print(t(Group3))
 
 
 ##Make plots
 
+#Remove first column
 Group1$Row_ID <- NULL
 Group2$Row_ID <- NULL
 Group3$Row_ID <- NULL
 
+#split the plot window
+par(mfrow = c(3,1))
 
-barplot(Group1)
-barplot(Group2)
-barplot(Group3)
+
+barplot(t(Group1))
+barplot(t(Group2))
+barplot(t(Group3))
