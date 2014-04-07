@@ -38,7 +38,8 @@ while (my $line = <$inhandle_key>){
 			}
 		elsif(exists $name_list2[1]){ #Input from genebank
 #			my @id2 = split(/\|/, $list[1]); 
-			$newname = join("_", $name_list2[1], $id_cell3[0], $id_cell3[1],$id_cell3[2],$id_cell3[3],$id_cell3[4]);
+			my @name_list3 = split(/\./, $name_list2[1]);
+			$newname = join("_", $name_list3[0], $id_cell3[1],$id_cell3[2],$id_cell3[3]);
 			$newname =~s/ /_/g;
 		
 			}else{ #The input from my own sequencing
