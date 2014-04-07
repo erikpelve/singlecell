@@ -29,15 +29,16 @@ while (my $line = <$inhandle_key>){
 	my $newname;
 	my @id = split(/>|\.|;/, $list[1]);
 	my @name_list = split(/;/, $list[1]);
-	my @name_list2 = split(/|/, $list[1]);
-		if (exists $name_list[1]){ #The input from sequences retreived from SILVA
+	my @name_list2 = split(/\|/, $list[1]);
+	my @id_cell3 = split(/ /, $name_list2[-1]);
+			if (exists $name_list[1]){ #The input from sequences retreived from SILVA
 			my @id_cell3 = split(/ /, $id[3]);
 			$newname = join("_", $id[$level], $id[1], $id[2], $id_cell3[0]);
 			$newname =~s/ /_/g;
 			}
 		elsif(exists $name_list2[1]){ #Input from genebank
-			my @id_cell3 = split(/ /, $id[-1]);
-			$newname = join("_", $id[1], $id_cell3[0], $id_cell3[1],$id_cell3[2],$id_cell3[3],$id_cell3[4]);
+#			my @id2 = split(/\|/, $list[1]); 
+			$newname = join("_", $name_list2[1], $id_cell3[0], $id_cell3[1],$id_cell3[2],$id_cell3[3],$id_cell3[4]);
 			$newname =~s/ /_/g;
 		
 			}else{ #The input from my own sequencing
