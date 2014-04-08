@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 
+#rename_fasta_v3.pl
+
 #Prepare a fasta file for alignment. Crops names and remove sequences with exactly identical names. Inputs a multiple fasta file, outputs a multiple fasta file with the names cropped to 5 characters + _n where n is the number of occurrence of the sequence in the file (1,2,3...), resulting in unique sequence names. It also outputs a key-file with the original name and the new name.
 print "Prepare a fasta file for alignment. Crops names and remove sequences with exactly identical names. Inputs a multiple fasta file, outputs a multiple fasta file with the names cropped to 5 characters + _n where n is the number of occurrence of the sequence in the file (1,2,3...), resulting in unique sequence names. It also outputs a key-file with the original name and the new name.\n\n";
 
