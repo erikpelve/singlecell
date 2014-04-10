@@ -30,7 +30,8 @@ while (my $line = <$inhandle_key>){
 	my @list = split(/\t/, $line);
 	die ("Problem with the key file. Did you add the files in the right order? First key, then tree.") if ($list[1] eq "");
 	my $newname;
-	my @id = split(/>|\.|;/, $list[1]);
+#	my @id = split(/>|\.|;/, $list[1]);
+	my @id = split(/	>/, $list[1]);
 	my @name_list = split(/;/, $list[1]);
 	my @name_list2 = split(/\|/, $list[1]);
 	my @id_cell3 = split(/ /, $name_list2[-1]);
@@ -59,6 +60,7 @@ while (my $line = <$inhandle_key>){
 																											$newname =~s/\[/_/g;
 																														$newname =~s/\]/_/g;
 																																	$newname =~s/\&/_/g;
+																																	$newname =~s/\:/_/g;
 #			}
 	my @key_id = split(/>/, $list[0]);	
 	$key_name{$key_id[1]} = $newname;
