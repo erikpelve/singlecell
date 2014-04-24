@@ -31,7 +31,7 @@ open my $outhandle8, ">", $outfile8 or die ("Coultn't write to the file $outfile
 
 print $outhandle1 "parse_orthomclResults_output.pl\n";
 print $outhandle1 scalar localtime();
-print $outhandle1 "\n\nOutput files:\n$outfile1\n$outfile2\n$outfile3\n$outfile4\n$outfile5\n$outfile6\n\nInput files:\n";
+print $outhandle1 "\n\nOutput files:\n$outfile1\n$outfile2\n$outfile3\n$outfile4\n$outfile5\n$outfile6\n$outfile7\n$outfile8\n\nInput files:\n";
 
 
 
