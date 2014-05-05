@@ -61,13 +61,12 @@ foreach my $contig (sort keys %contigs){
 foreach my $kmer (sort keys %kmers){
   print $outhandle $kmer, "\t";
  foreach my $contig (sort keys %contigs){
-     if (exists $contigs{$contig}{$kmer}){
- # 		print $outhandle "XX", "\t";
-        print $outhandle $contigs{$contig}{$kmer}, "\t";
-        }else{
+	    if (exists $contigs{$contig}{$kmer}){
+		    print $outhandle $contigs{$contig}{$kmer}, "\t";
+         }else{
           print $outhandle "0", "\t";
           }
-
+ 
   }
      print $outhandle "\n" 
 }
