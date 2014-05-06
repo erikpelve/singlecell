@@ -22,7 +22,7 @@ my $outhandle;
 
 my $contigsize = 0;
 my $within_contig_counter = 1;
-my $flag = 0;
+#	 my $flag = 0;
 my $filename;
 my $contig_name;
 
@@ -30,6 +30,7 @@ while (my $line = <$inhandle1>){
 	$line =~ s/\r|\n//g; #Remove newlines, regardless of format
 	chomp $line;
 	if (substr($line, 0,1) eq '>' ){  #header
+  	 $contigsize = 0;
 	  $within_contig_counter = 1;
 	  my @list = split(/\>|" "/, $line);
 	  $filename = $list[1]."_".$inname[-1];
@@ -40,7 +41,7 @@ while (my $line = <$inhandle1>){
 	  
 	}else{ #body
 	my $old_contigsize = $contigsize;
-	$contigsize = length($line) + $contigsize;
+	$contigsize = length($line) + $old_contigsize;
 	if ($contigsize < $size){
 		print $outhandle $line, "\n";
 	}else{ #swith to new subcontig
@@ -54,7 +55,8 @@ while (my $line = <$inhandle1>){
 		my $filename_final = $filename."_".$within_contig_counter.".fasta";
 		open $outhandle, '>', $filename_final or die ("Couldn't write to the file $filename_final");
 		print $outhandle $contig_name."_".$within_contig_counter, "\n";
-		print $outhandle $line #what remains of the $line
+		print $outhandle $line; #what remains of the $line
+		$contigsize = length($line);
 		}
 	
 
