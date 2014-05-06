@@ -20,7 +20,7 @@ my %fasta_id;
 
 my $outhandle;
 
-my $contigsize;
+my $contigsize = 0;
 my $within_contig_counter = 1;
 my $flag = 0;
 my $filename;
@@ -33,10 +33,10 @@ while (my $line = <$inhandle1>){
 	  $within_contig_counter = 1;
 	  my @list = split(/\>|" "/, $line);
 	  $filename = $list[1]."_".$inname[-1];
-	  my $filename_final = $filename."_".$within_contig_counter;
+	  my $filename_final = $filename."_".$within_contig_counter.".fasta";
 	  open $outhandle, '>', $filename_final or die ("Couldn't write to the file $filename_final");
 	  $contig_name = $line;
-	  print $outhandle $contig_name."_".within_contig_counter, "\n";
+	  print $outhandle $contig_name."_".$within_contig_counter, "\n";
 	  
 	}else{ #body
 	my $old_contigsize = $contigsize;
@@ -50,10 +50,10 @@ while (my $line = <$inhandle1>){
 		print $outhandle $beginning_of_line;
 		
 #		start new contig
-		$within_contig_counter = $within_contig_counter +1 
-		my $filename_final = $filename."_".$within_contig_counter;
+		$within_contig_counter = $within_contig_counter +1; 
+		my $filename_final = $filename."_".$within_contig_counter.".fasta";
 		open $outhandle, '>', $filename_final or die ("Couldn't write to the file $filename_final");
-		print $outhandle $contig_name."_".within_contig_counter, "\n";
+		print $outhandle $contig_name."_".$within_contig_counter, "\n";
 		print $outhandle $line #what remains of the $line
 		}
 	
