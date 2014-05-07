@@ -34,27 +34,16 @@ foreach(@ARGV){
 	$n++;
 	next if ($n == 1); #skip first attribute, where the number is stored.
 	my $infile1 = $_;
+	my @infile_list = split(/\//, $infile1);
+	my $infile_name = $infile_list[-1];
 	open my $inhandle1, '<', $infile1 or die "Couldn't open the file $infile1\n";
-	my $gene_name = $genelist{$infile1};
-	my @namelist = split(/\_/, $infile1);
-	my $m;
-                        if ($n <= 9){
-                                $m = "00".$n;
-                                }
-                        elsif($n <= 99){
-                                $m = "0".$n;
-                                }
-                        elsif($n <= 999){
-                                $m = $n;
-                                }
-                        elsif($n == 1000){
-                                die "Warning, maximum 999 sequences can be processed.\n";
-                                }
+	
+	#skip files that are not on the list
+	if (exists $gene_list{$infile_name}){
+	}else{
+	next;}
 
-	my $newname = substr($namelist[0], 0,1).substr($namelist[1],0,5).$m;
-
-
-
+	my $gene_name = $gene_list{$infile_name};
 	my $flag = 0;
 
 	#loop fasta file
@@ -62,8 +51,31 @@ foreach(@ARGV){
 		chomp $line; 
 		if (substr($line, 0,1) eq '>' ){ #header
 			$flag = 0;
-			if ($line eq $gene_name){
-				$flag = 1;
+			my @fasta_split =  split(/\>/, $line);
+			my @fastanamelist = split(/\ /, $fasta_split[1]);
+			my $fastaname = $fastanamelist[0];
+
+
+	my @namelist = split(/\_/, $infile_list[-1]);
+	my $m;
+                        if (($n-1) <= 9){
+                                $m = "00".($n-1);
+                                }
+                        elsif(($n-1) <= 99){
+                                $m = "0".($n-1);
+                                }
+                        elsif(($n-1) <= 999){
+                                $m = ($n-1);
+                                }
+                        elsif(($n-1) == 1000){
+                                die "Warning, maximum 999 sequences can be processed.\n";
+                                }
+
+	my $newname = ">".substr($namelist[0], 0,1).substr($namelist[1],0,4).$m;
+
+
+			if ($fastaname eq $gene_name){
+							$flag = 1;
 				print $outhandle $newname, "\n";
 			}else{}
 		}else{
