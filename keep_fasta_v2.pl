@@ -5,11 +5,14 @@ use warnings;
 #keep_fasta.pl
 #Fasta file ARGV[0], list of fasta entries to include as ARGV[1]. Should not start with >
 #splits fasta names that contain " ", only match first part, still prints whole part.
+#ARGV[2] = new file name (default "subset.".$inname[-1]")
+
 
 my $infile1 = $ARGV[0];
 my $infile2 = $ARGV[1];
 my @inname = split(/\//, $infile1);
 my $outfile1 = "subset.".$inname[-1];
+$outfile = $ARGV[2] if (exists $ARGV[2]);
 
 open my $inhandle1, '<', $infile1 or die "Couldn't open the file $infile1\n";
 open my $inhandle2, '<', $infile2 or die "Couldn't open the file $infile2\n";
