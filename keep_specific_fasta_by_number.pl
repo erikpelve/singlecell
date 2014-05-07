@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-#keep_fasta.pl
+#keep_specific_fasta_by_number.pl
 # ARGV [0] - number of fasta sequence in file to keep. 
 #Fasta files ARGV[1] ...
 
@@ -12,7 +12,7 @@ use warnings;
 if ($ARGV[0] =~ /^[+-]?\d+$/ ) {
     
 } else {
-    "ARGV[0] needs to be a number\n";
+  print  "ARGV[0] needs to be a number\n";
 	exit;
 }
 
@@ -26,7 +26,7 @@ my $n = 0;
 
 foreach(@ARGV){
 	$n++;
-	next if $n = 1; #skip first attribute, where the number is stored.
+	next if ($n == 1); #skip first attribute, where the number is stored.
 	my $infile1 = $_;
 	open my $inhandle1, '<', $infile1 or die "Couldn't open the file $infile1\n";
 
@@ -44,7 +44,7 @@ foreach(@ARGV){
 			}else{}
 		}else{
 			if ($flag == 1){
-			print $outhandle $line	
+			print $outhandle $line, "\n";	
 			}
 			else{}
 		}
