@@ -12,7 +12,7 @@ my $infile1 = $ARGV[0];
 my $infile2 = $ARGV[1];
 my @inname = split(/\//, $infile1);
 my $outfile1 = "subset.".$inname[-1];
-$outfile = $ARGV[2] if (exists $ARGV[2]);
+$outfile1 = $ARGV[2] if (exists $ARGV[2]);
 
 open my $inhandle1, '<', $infile1 or die "Couldn't open the file $infile1\n";
 open my $inhandle2, '<', $infile2 or die "Couldn't open the file $infile2\n";
