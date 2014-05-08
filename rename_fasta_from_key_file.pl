@@ -10,7 +10,7 @@ use warnings;
 
 my $infile1 = $ARGV[0];
 my $infile2 = $ARGV[1];
-my $outfile1 = "renamed_".$infile;
+my $outfile1 = "renamed_".$infile1;
 
 open my $inhandle1, '<', $infile1 or die "Couldn't open the file $infile1\n";
 open my $inhandle2, '<', $infile2 or die "Couldn't open the file $infile2\n";
@@ -18,7 +18,7 @@ open my $outhandle1, '>', $outfile1 or die "Couldn't write to the file $outfile1
 
 #read key
 my %key; #{full name} = key
-while(my $line = <$inhandle1>){
+while(my $line = <$inhandle2>){
 	chomp $line;
 	my @list = split(/\t/, $line);
 	$key{$list[1]} = $list[0]; 
@@ -26,7 +26,7 @@ while(my $line = <$inhandle1>){
 
 
 
-while (my $line = <$inhandle>){
+while (my $line = <$inhandle1>){
 	$line =~ s/\r|\n//g; #Remove newlines, regardless of format
 	chomp $line;
 	my $flag = 0;
@@ -34,6 +34,7 @@ while (my $line = <$inhandle>){
 		if (exists $key{$line}){
 			print $outhandle1 $key{$line}, "\n";
 			}
+		}
 	else{
 		print $outhandle1 $line, "\n";
 	
