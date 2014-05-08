@@ -5,6 +5,9 @@ use warnings;
 #concatinate_fasta_aligns.pl
 # ARGV [0] ... - fasta aligns. Each file is a specific file. Every file have to contain genes from the same species, and the gene from each species have to have the same fasta handle in each file.
 
+my $outfile = "concatinated.align.fasta";
+open my $outhandle, '>', $outfile or die "Couldn't open the file $outfile\n";
+
 
 my %gene_list; #filename and geneseq
 
@@ -20,13 +23,18 @@ foreach(@ARGV){
 	my $gene_name;
 	my @tempseq;
 	#loop fasta file
-	$flag = 0;
+	my $flag = 0;
 	while (my $line = <$inhandle1>){
 		chomp $line;
 		if (substr($line, 0,1) eq '>' ){ #header
 			if ($flag ==1){
-				my $seq = join("\n",@tempseq)
-				my $seqcul = $gene_list{$gene_name}.$seq;
+				my $seq = join("\n",@tempseq);
+				my $seqcul;
+				if (exists $gene_list{$gene_name}){
+					 $seqcul = $gene_list{$gene_name}.$seq;
+					 }else{
+					 $seqcul = $seq;
+					 }
 				$gene_list{$gene_name} = $seqcul;
 				
 				@tempseq = ();
@@ -38,10 +46,23 @@ foreach(@ARGV){
 			}
 			
 	}
+	if ($flag ==1){
+				my $seq = join("\n",@tempseq);
+				my $seqcul;
+				if (exists $gene_list{$gene_name}){
+					 $seqcul = $gene_list{$gene_name}.$seq;
+					 }else{
+					 $seqcul = $seq;
+					 }
+				$gene_list{$gene_name} = $seqcul;
+				
+				@tempseq = ();
+				$flag = 0;
+				}
 		
 	
 }
 
 foreach my $genome (sort keys %gene_list){
-	print $genome, "\n", $gene_list{$genome}, "\n";
+	print $outhandle $genome, "\n", $gene_list{$genome}, "\n";
 	}
