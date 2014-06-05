@@ -44,7 +44,7 @@ foreach(@ARGV){
 	my $index_position_plus1 = $index_position +1;
 
 	# print index file
-	print $outhandle_index "DNA", "\t", $infile_parts[0], "\t", $index_position_plus1 , "-"; # print the line for the coming gene, except the end coordinate
+	print $outhandle_index "DNA, ", $infile_parts[0], " = ", $index_position_plus1 , "-"; # print the line for the coming gene, except the end coordinate
 
 
 	#loop fasta file
@@ -58,7 +58,9 @@ foreach(@ARGV){
 		if (substr($line, 0,1) eq '>' ){ #header
 			if ($flag ==1){
 				my $seq = join("\n",@tempseq);
-				$index_position = $index_position + length($line) if ($gene_no ==0);
+				my $chompseq = $seq;
+				chomp $chompseq;
+				$index_position = $index_position + length($chompseq) if ($gene_no ==0);
 				print $outhandle_index $index_position, "\n" if ($gene_no == 0);;
 				$gene_no++;
 				my $seqcul;
@@ -78,16 +80,16 @@ foreach(@ARGV){
 
 			$flag =1;
 			push(@tempseq, $line);
-			$index_position = $index_position + length($line) if ($gene_no == 0);
 			}
 
 	}
 	if ($flag ==1){
-				my $seq = join("\n",@tempseq);
 
+				my $seq = join("\n",@tempseq);
+				
 				my $seqcul;
 				if (exists $gene_list{$gene_name}){
-					 $seqcul = $gene_list{$gene_name}.$seq;
+					 $seqcul = $gene_list{$gene_name}."\n".$seq;
 					 }else{
 					 $seqcul = $seq;
 					 }
