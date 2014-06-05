@@ -58,8 +58,8 @@ foreach(@ARGV){
 		if (substr($line, 0,1) eq '>' ){ #header
 			if ($flag ==1){
 				my $seq = join("\n",@tempseq);
-				my $chompseq = $seq;
-				chomp $chompseq;
+				my $chompseq = 0;
+				 $chompseq = join("",@tempseq);
 				$index_position = $index_position + length($chompseq) if ($gene_no ==0);
 				print $outhandle_index $index_position, "\n" if ($gene_no == 0);;
 				$gene_no++;
