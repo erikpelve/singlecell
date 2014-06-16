@@ -21,14 +21,15 @@ my %fasta_id;
 #Read fasta file, keep indicated fasta.	
 my $number = 0;
 while (my $line = <$inhandle1>){
-	$number++;
+
 	$line =~ s/\r|\n//g; #Remove newlines, regardless of format
 	chomp $line;
 	if (substr($line, 0,1) eq '>' ){  #header
-		print $outhandle $line."_".$number, "\n";
+		$number++;
+			print $outhandle $line."_".$number, "\n";
 		}
 	
-	}else{
+	else{
 			print $outhandle $line, "\n";
 		}
 }
