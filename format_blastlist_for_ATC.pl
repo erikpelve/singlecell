@@ -6,7 +6,7 @@ use warnings;
 #Input blast list (from the m8 flag, tab list on galaxy)file ARGV[0]
 #ARGV[1] (optional) and query seq. absolute position file (0 or blank for not add)
 #ARGV[2] (optional) and subject seq. absolute position file (0 or blank for not add)
-
+#ARGV[4] (optional) score cutoff value. If empty or 0 - no cutoff
 
 #Print the following separated by space
 #12 bitscore Bit score
@@ -25,6 +25,7 @@ use warnings;
 my $infile1 = $ARGV[0];
 my $infile2 = $ARGV[1];
 my $infile3 = $ARGV[2];
+my $infile4 = $ARGV[3];
 
 my @inname = split(/\//, $infile1);
 my $outfile1 = "ACT_formated_comparison_file.".$inname[-1];
@@ -61,6 +62,18 @@ if (exists $ARGV[2]){
 		$poslist_subject{$list[0]} = $list[1]."\t".$list[2];
 	}}
 }
+
+
+my $scorecutoff = 0;
+
+if (exists $ARGV[3]){
+	if ($ARGV[3] eq "0"){
+	}else{
+		 $scorecutoff = $ARGV[3];
+	}
+}
+
+
 open my $outhandle, '>', $outfile1 or die "Couldn't write to the file $outfile1\n";
 
 
@@ -76,6 +89,13 @@ while (my $line = <$inhandle1>){
 	my $qstop = $list[7];
 	my $sstart=$list[8];
 	my $send=$list[9];
+
+	#Filter on score
+	if ($scorecutoff eq "0"){}else{
+		next if ($list[11] < $scorecutoff);
+
+	}
+
 
 			#query
 	if ($flag_pos_query == 1){
